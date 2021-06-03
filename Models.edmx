@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SuraModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="administradores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="clientes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rut" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="saldo" Type="int" Nullable="false" />
+          <Property Name="adicional" Type="int" Nullable="false" />
+          <Property Name="fecha_ing" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="seguros">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adicional" Type="int" Nullable="false" />
+          <Property Name="tiposeguro_id" Type="int" Nullable="false" />
+          <Property Name="tipopago_id" Type="int" Nullable="false" />
+          <Property Name="cuotas" Type="int" Nullable="false" />
+          <Property Name="cliente_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipopago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreTipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="valor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tiposeguros">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreTipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="valor" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_cliente">
+          <End Role="clientes" Type="Self.clientes" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tipopago">
+          <End Role="tipopago" Type="Self.tipopago" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipopago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="tipopago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tiposeguro">
+          <End Role="tiposeguros" Type="Self.tiposeguros" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tiposeguros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="tiposeguro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SuraModelStoreContainer">
+          <EntitySet Name="administradores" EntityType="Self.administradores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="clientes" EntityType="Self.clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seguros" EntityType="Self.seguros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipopago" EntityType="Self.tipopago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tiposeguros" EntityType="Self.tiposeguros" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_cliente" Association="Self.FK_cliente">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tipopago" Association="Self.FK_tipopago">
+            <End Role="tipopago" EntitySet="tipopago" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tiposeguro" Association="Self.FK_tiposeguro">
+            <End Role="tiposeguros" EntitySet="tiposeguros" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SuraModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="administradore">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rut" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="saldo" Type="Int32" Nullable="false" />
+          <Property Name="adicional" Type="Int32" Nullable="false" />
+          <Property Name="fecha_ing" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="seguros" Relationship="Self.FK_cliente" FromRole="clientes" ToRole="seguros" />
+        </EntityType>
+        <EntityType Name="seguro">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adicional" Type="Int32" Nullable="false" />
+          <Property Name="tiposeguro_id" Type="Int32" Nullable="false" />
+          <Property Name="tipopago_id" Type="Int32" Nullable="false" />
+          <Property Name="cuotas" Type="Int32" Nullable="false" />
+          <Property Name="cliente_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cliente" Relationship="Self.FK_cliente" FromRole="seguros" ToRole="clientes" />
+          <NavigationProperty Name="tipopago" Relationship="Self.FK_tipopago" FromRole="seguros" ToRole="tipopago" />
+          <NavigationProperty Name="tiposeguro" Relationship="Self.FK_tiposeguro" FromRole="seguros" ToRole="tiposeguros" />
+        </EntityType>
+        <EntityType Name="tipopago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreTipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="seguros" Relationship="Self.FK_tipopago" FromRole="tipopago" ToRole="seguros" />
+        </EntityType>
+        <EntityType Name="tiposeguro">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreTipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="seguros" Relationship="Self.FK_tiposeguro" FromRole="tiposeguros" ToRole="seguros" />
+        </EntityType>
+        <Association Name="FK_cliente">
+          <End Role="clientes" Type="Self.cliente" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="clientes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tipopago">
+          <End Role="tipopago" Type="Self.tipopago" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipopago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="tipopago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tiposeguro">
+          <End Role="tiposeguros" Type="Self.tiposeguro" Multiplicity="1" />
+          <End Role="seguros" Type="Self.seguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tiposeguros">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="seguros">
+              <PropertyRef Name="tiposeguro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SuraEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="administradores" EntityType="Self.administradore" />
+          <EntitySet Name="clientes" EntityType="Self.cliente" />
+          <EntitySet Name="seguros" EntityType="Self.seguro" />
+          <EntitySet Name="tipopagoes" EntityType="Self.tipopago" />
+          <EntitySet Name="tiposeguros" EntityType="Self.tiposeguro" />
+          <AssociationSet Name="FK_cliente" Association="Self.FK_cliente">
+            <End Role="clientes" EntitySet="clientes" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tipopago" Association="Self.FK_tipopago">
+            <End Role="tipopago" EntitySet="tipopagoes" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tiposeguro" Association="Self.FK_tiposeguro">
+            <End Role="tiposeguros" EntitySet="tiposeguros" />
+            <End Role="seguros" EntitySet="seguros" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SuraModelStoreContainer" CdmEntityContainer="SuraEntities">
+          <EntitySetMapping Name="administradores">
+            <EntityTypeMapping TypeName="SuraModel.administradore">
+              <MappingFragment StoreEntitySet="administradores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="clientes">
+            <EntityTypeMapping TypeName="SuraModel.cliente">
+              <MappingFragment StoreEntitySet="clientes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="saldo" ColumnName="saldo" />
+                <ScalarProperty Name="adicional" ColumnName="adicional" />
+                <ScalarProperty Name="fecha_ing" ColumnName="fecha_ing" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seguros">
+            <EntityTypeMapping TypeName="SuraModel.seguro">
+              <MappingFragment StoreEntitySet="seguros">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="adicional" ColumnName="adicional" />
+                <ScalarProperty Name="tiposeguro_id" ColumnName="tiposeguro_id" />
+                <ScalarProperty Name="tipopago_id" ColumnName="tipopago_id" />
+                <ScalarProperty Name="cuotas" ColumnName="cuotas" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipopagoes">
+            <EntityTypeMapping TypeName="SuraModel.tipopago">
+              <MappingFragment StoreEntitySet="tipopago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombreTipo" ColumnName="nombreTipo" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tiposeguros">
+            <EntityTypeMapping TypeName="SuraModel.tiposeguro">
+              <MappingFragment StoreEntitySet="tiposeguros">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombreTipo" ColumnName="nombreTipo" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
