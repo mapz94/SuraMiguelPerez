@@ -217,6 +217,7 @@
       <DependentUpon>Models.edmx</DependentUpon>
       <LastGenOutput>Models.cs</LastGenOutput>
     </Content>
+    <Content Include="SQLQuerySura.sql" />
     <None Include="Resources\Picture3.png" />
     <None Include="Resources\Picture1.png" />
     <None Include="Resources\Picture2.png" />
